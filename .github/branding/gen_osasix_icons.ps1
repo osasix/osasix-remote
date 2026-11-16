@@ -1,8 +1,7 @@
 # Genera los iconos de Osasix Remote a partir de los poligonos del isotipo SVG.
-# Uso (desde la raiz del repo):  powershell -ExecutionPolicy Bypass -File res\gen_osasix_icons.ps1
+# Uso: powershell -ExecutionPolicy Bypass -File gen_osasix_icons.ps1 [-Root <carpeta del codigo de RustDesk>]
+param([string]$Root = (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)))
 Add-Type -AssemblyName System.Drawing
-
-$root = Split-Path -Parent $PSScriptRoot
 
 # Isotipo Osasix (viewBox 103 44 238 307). Todos los trazos son rectos.
 $vbX = 103; $vbY = 44; $vbW = 238; $vbH = 307
@@ -36,7 +35,7 @@ function New-LogoPng([int]$size, [double]$pad = 0.08) {
 }
 
 function Save-Png([string]$rel, [int]$size) {
-    [System.IO.File]::WriteAllBytes((Join-Path $root $rel), (New-LogoPng $size))
+    [System.IO.File]::WriteAllBytes((Join-Path $Root $rel), (New-LogoPng $size))
 }
 
 function Save-Ico([string]$rel, [int[]]$sizes) {
@@ -55,7 +54,7 @@ function Save-Ico([string]$rel, [int[]]$sizes) {
     }
     foreach ($img in $images) { $bw.Write($img) }
     $bw.Flush()
-    [System.IO.File]::WriteAllBytes((Join-Path $root $rel), $ms.ToArray())
+    [System.IO.File]::WriteAllBytes((Join-Path $Root $rel), $ms.ToArray())
 }
 
 Save-Png 'res\32x32.png' 32
