@@ -133,7 +133,7 @@ jobs:
           sed -i '/dpiAware/d' res/manifest.xml
           pushd ./libs/portable
           pip3 install -r requirements.txt
-          python3 ./generate.py -f ../../osasix-remote/ -e rustdesk.exe -l 11 -t "${{ env.TARGET }}" --exclude-exe
+          python3 ./generate.py -f ../../osasix-remote/ -e rustdesk.exe -l 11 -t "${{ env.TARGET }}"
           popd
           mkdir -p ./portable-out
           cp ./target/${{ env.TARGET }}/release/rustdesk-portable-packer.exe ./portable-out/Osasix-Remote.exe
